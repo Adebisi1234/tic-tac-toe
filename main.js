@@ -1,9 +1,14 @@
 const GameBoard = ['','','','','','','','','']
 
 let player1 = true
-let player
+let player;
 
 
+const winArr = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8]
+]
 
 let board = document.querySelectorAll('.grid-content')
 
@@ -13,26 +18,29 @@ boardArr.forEach((x) => {
     x.addEventListener('click', add)
 })
 
-function add(e) {
+function sign() {
     if(player1) {
         player = 'x'
+        player1 = !player1
     }else {
         player = 'o'
+        player1 = !player1
     }
+}
+
+function add(e) {
+    sign()
     GameBoard[e.target.getAttribute('data-index')] = player
 
-    updateGameBoard()
-    winArr.forEach((x) => {
-        if(x.every(item => getAllIndexes(GameBoard, "x").includes(item)) && getAllIndexes(GameBoard, "x").every(item => x.includes(item))){
-            console.log('yes')
-            document.body.append('you win')
-        }else {
-            console.log('no')
-            console.log(getAllIndexes(GameBoard, 'x'))
-            console.log(x)
-        }
-    })
-    player1 = !player1
+    let index = getAllIndexes(GameBoard, "x")
+    if(winArr[0].toString() == index.toString()){
+        console.log('fuck')
+    }else {
+        console.log(index.toString())
+        console.log(winArr[0].toString())
+    }
+
+    updateGameBoard()    
 }
 
 function updateGameBoard() {
@@ -58,8 +66,6 @@ function getAllIndexes(arr, val) {
 // var indexes = getAllIndexes(GameBoard, "x");
 
 
-const winArr = [[0,1,2]]
-
 
 
 // PsuedoCode
@@ -68,7 +74,7 @@ const winArr = [[0,1,2]]
 
 let a = [1,2,3]
 let b = [1,2,3]
+console.log(a == b.toString())
 
-// if(){
-//     console.log('fuck')
-// }
+// Will be trying out toString
+
