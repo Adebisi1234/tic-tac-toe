@@ -1,20 +1,23 @@
-let isX = true
-let playerChoice
+const GameBoard = ['','','','','','','','','']
 
+let board = document.querySelectorAll('.grid-content')
 
-let gridItem = document.querySelectorAll('.grid-content')
-let gridArr = Array.from(gridItem)
+const boardArr = Array.from(board)
+console.log(boardArr[0].getAttribute('data-index'))
 
-gridArr.forEach((x) => x.addEventListener('click', player))
+boardArr.forEach((x) => {
+    x.addEventListener('click', add)
+})
 
-function player(e) {
-    if(isX) {
-        playerChoice = 'x'
-        isX = false
-    }else {
-        playerChoice = 'o'
-        isX = true
-    }
-    e.target.textContent = playerChoice
-    console.log(playerChoice)
+function add(e) {
+    GameBoard[e.target.getAttribute('data-index')] = 'x'
+    console.log(GameBoard)
+    updateGameBoard()
+
+}
+
+function updateGameBoard() {
+    boardArr.forEach((x, i) => {
+        x.textContent = GameBoard[i]
+    })
 }
