@@ -7,7 +7,12 @@ let player;
 const winArr = [
     [0,1,2],
     [3,4,5],
-    [6,7,8]
+    [6,7,8],
+    [0,4,8],
+    [2,3,6],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8]
 ]
 
 let board = document.querySelectorAll('.grid-content')
@@ -33,11 +38,13 @@ function add(e) {
     GameBoard[e.target.getAttribute('data-index')] = player
 
     let index = getAllIndexes(GameBoard, "x")
-    if(winArr[0].toString() == index.toString()){
-        console.log('fuck')
-    }else {
-        console.log(index.toString())
-        console.log(winArr[0].toString())
+    for(let i = 0; i < winArr.length; i++) {
+        if(index.toString().includes(winArr[i].toString())){
+            console.log('fuck')
+        }else {
+            console.log(index.toString())
+            console.log(winArr[i].toString())
+        }
     }
 
     updateGameBoard()    
