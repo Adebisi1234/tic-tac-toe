@@ -6,6 +6,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    flex-direction: column;
 }
 
 .grid {
@@ -43,4 +44,12 @@ body {
 
 .grid-content:hover {
     background-color: rgba(173, 216, 230, 0.504);
+}
+
+.flex-item {
+    margin-top: 20px;
+}
+
+.hide {
+    display: none;
 }
