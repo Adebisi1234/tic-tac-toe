@@ -8,7 +8,6 @@ let player
 let board = document.querySelectorAll('.grid-content')
 
 const boardArr = Array.from(board)
-console.log(boardArr[0].getAttribute('data-index'))
 
 boardArr.forEach((x) => {
     x.addEventListener('click', add)
@@ -21,11 +20,16 @@ function add(e) {
         player = 'o'
     }
     GameBoard[e.target.getAttribute('data-index')] = player
-    console.log(GameBoard)
+
     updateGameBoard()
     winArr.forEach((x) => {
-        if(x == getAllIndexes(GameBoard, 'x')){
+        if(x.every(item => getAllIndexes(GameBoard, "x").includes(item)) && getAllIndexes(GameBoard, "x").every(item => x.includes(item))){
             console.log('yes')
+            document.body.append('you win')
+        }else {
+            console.log('no')
+            console.log(getAllIndexes(GameBoard, 'x'))
+            console.log(x)
         }
     })
     player1 = !player1
@@ -61,3 +65,10 @@ const winArr = [[0,1,2]]
 // PsuedoCode
 
 // if x|| o indexes ==  win index[i] console.log yes
+
+let a = [1,2,3]
+let b = [1,2,3]
+
+// if(){
+//     console.log('fuck')
+// }
