@@ -1,11 +1,18 @@
 * {
     box-sizing: border-box;
 }
+
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+}
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     flex-direction: column;
 }
 
@@ -52,4 +59,18 @@ body {
 
 .hide {
     display: none;
+}
+
+header, footer,p {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

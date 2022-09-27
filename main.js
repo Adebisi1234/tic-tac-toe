@@ -21,6 +21,8 @@ let board = document.querySelectorAll('.grid-content')
 
 const boardArr = Array.from(board)
 
+
+
 boardArr.forEach((x) => {
     x.addEventListener('click', add)
 })
@@ -66,11 +68,19 @@ function checkWin() {
     }
 }
 
+function checkDraw() {
+    if(boardArr.every(x => x.textContent != '')){
+        console.log('Its a draw')
+        p.innerText = 'Its a draw'
+    }
+}
+
 function add(e) {
     sign()
     GameBoard[e.target.getAttribute('data-index')] = player
     checkWin()
-    updateGameBoard()    
+    updateGameBoard()
+    checkDraw()
 }
 
 function updateGameBoard() {
@@ -92,19 +102,3 @@ function getAllIndexes(arr, val) {
     }
     return indexes;
 }
-
-// var indexes = getAllIndexes(GameBoard, "x");
-
-
-
-
-// PsuedoCode
-
-// if x|| o indexes ==  win index[i] console.log yes
-
-let a = [1,2,3]
-let b = [1,2,3]
-console.log(a == b.toString())
-
-// Will be trying out toString
-
