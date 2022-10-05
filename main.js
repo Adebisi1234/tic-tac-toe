@@ -1,10 +1,25 @@
 let GameBoard = ['','','','','','','','','']
-
-let player1 = true
+let x = document.querySelector('.x')
+let o = document.querySelector('.o')
+let player1;
+let computerChoice;
 let player;
 let p = document.querySelector('p')
+let modal = document.querySelector('.modal')
 let btn = document.querySelector('button')
+let next;
+let choice;
 btn.addEventListener('click', restart)
+
+let choices = [x,o]
+choices.forEach((e) => e.addEventListener('click', choiceSelected))
+
+
+function choiceSelected(e) {
+    player1 = e.target.textContent
+    next = true
+    modal.style.display = 'none'
+}
 
 const winArr = [
     [0,1,2],
@@ -39,12 +54,18 @@ function restart() {
 }
 
 function sign() {
-    if(player1) {
-        player = 'x'
-        player1 = !player1
+    if(player1.toLowerCase() === 'x') {
+        computerChoice = 'o'
     }else {
-        player = 'o'
-        player1 = !player1
+        computerChoice = 'x'
+    }
+
+    if(next) {
+        player = player1
+        next = !next
+    }else {
+        player = computerChoice
+        next = !next
     }
 }
 
@@ -75,14 +96,31 @@ function checkDraw() {
     }
 }
 
+function choicese() {
+    choice = Math.floor(Math.random() * 9)
+    if(GameBoard[choice] != ''){
+        choicese()
+    }
+}
+
 function add(e) {
     sign()
-    GameBoard[e.target.getAttribute('data-index')] = player
+    if(player == computerChoice) {
+        choicese()
+        GameBoard[choice] = player
+        console.log(GameBoard)
+        console.log(boardArr)
+        updateGameBoard()
+    }else {
+        GameBoard[e.target.getAttribute('data-index')] = player
+    }
     checkWinForX()
     checkWinForO()
     updateGameBoard()
     checkDraw()
+    updateGameBoard()
 }
+
 
 function updateGameBoard() {
     boardArr.forEach((x, i) => {
