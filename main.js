@@ -69,16 +69,17 @@ function sign() {
 // }
 
 function checkDraw() {
-    if(boardArr.every(x => x.textContent != '')){
-        console.log('Its a draw')
+    if(boardArr.every(x => x.textContent != '' && p.textContent === '')){
         p.innerText = 'Its a draw'
+        btn.classList.remove('hide')
     }
 }
 
 function add(e) {
     sign()
     GameBoard[e.target.getAttribute('data-index')] = player
-    checkWin()
+    checkWinForX()
+    checkWinForO()
     updateGameBoard()
     checkDraw()
 }
@@ -103,16 +104,35 @@ function getAllIndexes(arr, val) {
     return indexes;
 }
 
-function checkWin() {
+function checkWinForX() {
     let indexesOfX = getAllIndexes(GameBoard, "x")
-    let indexesOfO = getAllIndexes(GameBoard)
-    let test
-    let ano
+    let test;
     for (let i = 0; i < winArr.length; i++) {
         for(let j = 0; j < winArr[i].length; j++) {
             test = indexesOfX.includes(winArr[i][j])
             if(test === false) {
-                console.log(test)
+                break
+            }
+        }
+        if(test) {
+            p.innerText = `${player} win`
+            boardArr.forEach((x) => {
+                x.removeEventListener('click', add)
+                btn.classList.remove('hide')
+            })
+        }
+    
+    }
+    
+}
+
+function checkWinForO() {
+    let indexesOfO = getAllIndexes(GameBoard, "o")
+    let test;
+    for (let i = 0; i < winArr.length; i++) {
+        for(let j = 0; j < winArr[i].length; j++) {
+            test = indexesOfO.includes(winArr[i][j])
+            if(test === false) {
                 break
             }
         }
