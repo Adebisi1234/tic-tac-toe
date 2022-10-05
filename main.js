@@ -48,25 +48,25 @@ function sign() {
     }
 }
 
-function checkWin() {
-    let X = getAllIndexes(GameBoard, "x")
-    let o = getAllIndexes(GameBoard, "o")
-    for(let i = 0; i < winArr.length; i++) {
-        if(X.toString().includes(winArr[i].toString())){
-            p.innerText = 'X win'
-            boardArr.forEach((x) => {
-                x.removeEventListener('click', add)
-                btn.classList.remove('hide')
-            })
-        }else if((o.toString().includes(winArr[i].toString()))) {
-            p.innerText = 'O win'
-            boardArr.forEach((x) => {
-                x.removeEventListener('click', add)
-                btn.classList.remove('hide')
-            })
-        }
-    }
-}
+// function checkWin() {
+//     let X = getAllIndexes(GameBoard, "x")
+//     let o = getAllIndexes(GameBoard, "o")
+//     for(let i = 0; i < winArr.length; i++) {
+//         if(X.toString().includes(winArr[i].toString())){
+//             p.innerText = 'X win'
+//             boardArr.forEach((x) => {
+//                 x.removeEventListener('click', add)
+//                 btn.classList.remove('hide')
+//             })
+//         }else if((o.toString().includes(winArr[i].toString()))) {
+//             p.innerText = 'O win'
+//             boardArr.forEach((x) => {
+//                 x.removeEventListener('click', add)
+//                 btn.classList.remove('hide')
+//             })
+//         }
+//     }
+// }
 
 function checkDraw() {
     if(boardArr.every(x => x.textContent != '')){
@@ -101,4 +101,29 @@ function getAllIndexes(arr, val) {
         indexes.push(i);
     }
     return indexes;
+}
+
+function checkWin() {
+    let indexesOfX = getAllIndexes(GameBoard, "x")
+    let indexesOfO = getAllIndexes(GameBoard)
+    let test
+    let ano
+    for (let i = 0; i < winArr.length; i++) {
+        for(let j = 0; j < winArr[i].length; j++) {
+            test = indexesOfX.includes(winArr[i][j])
+            if(test === false) {
+                console.log(test)
+                break
+            }
+        }
+        if(test) {
+            p.innerText = `${player} win`
+            boardArr.forEach((x) => {
+                x.removeEventListener('click', add)
+                btn.classList.remove('hide')
+            })
+        }
+    
+    }
+    
 }
