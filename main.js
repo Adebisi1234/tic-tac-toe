@@ -113,6 +113,14 @@ function add(e) {
         updateGameBoard()
     }else {
         GameBoard[e.target.getAttribute('data-index')] = player
+        checkWinForX()
+        checkWinForO()
+        sign()
+        choicese()
+        GameBoard[choice] = player
+        console.log(GameBoard)
+        console.log(boardArr)
+        updateGameBoard()
     }
     checkWinForX()
     checkWinForO()
@@ -153,7 +161,7 @@ function checkWinForX() {
             }
         }
         if(test) {
-            p.innerText = `${player} win`
+            p.innerText = `x win`
             boardArr.forEach((x) => {
                 x.removeEventListener('click', add)
                 btn.classList.remove('hide')
@@ -175,7 +183,7 @@ function checkWinForO() {
             }
         }
         if(test) {
-            p.innerText = `${player} win`
+            p.innerText = `o win`
             boardArr.forEach((x) => {
                 x.removeEventListener('click', add)
                 btn.classList.remove('hide')
