@@ -108,8 +108,6 @@ function add(e) {
     if(player == computerChoice) {
         choicese()
         GameBoard[choice] = player
-        console.log(GameBoard)
-        console.log(boardArr)
         updateGameBoard()
     }else {
         GameBoard[e.target.getAttribute('data-index')] = player
@@ -118,8 +116,6 @@ function add(e) {
         sign()
         choicese()
         GameBoard[choice] = player
-        console.log(GameBoard)
-        console.log(boardArr)
         updateGameBoard()
     }
     checkWinForX()
