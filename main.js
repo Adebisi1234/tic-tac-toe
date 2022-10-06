@@ -191,9 +191,14 @@ function checkWinForO() {
             test = indexesOfO.includes(winArr[i][j])
             if(test === false) {
                 break
+            }else{
+                test2 = winArr[i]
             }
         }
         if(test) {
+            test2.forEach((x) => {
+                boardArr[x].style.background = 'grey'
+            })
             p.innerText = `o win`
             boardArr.forEach((x) => {
                 x.removeEventListener('click', add)
