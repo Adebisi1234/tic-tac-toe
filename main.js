@@ -48,6 +48,7 @@ function restart() {
     p.textContent = ''
     boardArr.forEach((x) => {
         x.textContent = ''
+        x.style.cursor = 'default'
         x.addEventListener('click', add)
     })
     updateGameBoard()
@@ -98,31 +99,39 @@ function checkDraw() {
 
 function choicese() {
     choice = Math.floor(Math.random() * 9)
-    if(GameBoard[choice] != ''){
+    let indexesOfSpace = getAllIndexes(GameBoard, '')
+    if(indexesOfSpace.length <= 1){
+        choice = indexesOfSpace[0]
+    }else if(GameBoard[choice] != ''){
         choicese()
     }
 }
 
 function add(e) {
-    sign()
-    if(player == computerChoice) {
-        choicese()
-        GameBoard[choice] = player
-        updateGameBoard()
+    if(GameBoard[e.target.getAttribute('data-index')] !='' ){
+        boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
     }else {
-        GameBoard[e.target.getAttribute('data-index')] = player
+        sign()
+        if(player == computerChoice) {
+            choicese()
+            GameBoard[choice] = player
+            updateGameBoard()
+        }else {
+            GameBoard[e.target.getAttribute('data-index')] = player
+            checkWinForX()
+            checkWinForO()
+            sign()
+            choicese()
+            GameBoard[choice] = player
+            updateGameBoard()
+        }
         checkWinForX()
         checkWinForO()
-        sign()
-        choicese()
-        GameBoard[choice] = player
+        updateGameBoard()
+        checkDraw()
         updateGameBoard()
     }
-    checkWinForX()
-    checkWinForO()
-    updateGameBoard()
-    checkDraw()
-    updateGameBoard()
+    
 }
 
 
