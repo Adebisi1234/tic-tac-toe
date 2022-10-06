@@ -47,6 +47,7 @@ function restart() {
     btn.classList.add('hide')
     p.textContent = ''
     boardArr.forEach((x) => {
+        x.style.background = ''
         x.textContent = ''
         x.style.cursor = 'default'
         x.addEventListener('click', add)
@@ -154,7 +155,7 @@ function getAllIndexes(arr, val) {
     }
     return indexes;
 }
-
+let test2;
 function checkWinForX() {
     let indexesOfX = getAllIndexes(GameBoard, "x")
     let test;
@@ -163,9 +164,14 @@ function checkWinForX() {
             test = indexesOfX.includes(winArr[i][j])
             if(test === false) {
                 break
+            }else{
+                test2 = winArr[i]
             }
         }
         if(test) {
+            test2.forEach((x) => {
+                boardArr[x].style.background = 'grey'
+            })
             p.innerText = `x win`
             boardArr.forEach((x) => {
                 x.removeEventListener('click', add)
