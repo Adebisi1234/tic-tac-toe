@@ -179,3 +179,24 @@ function checkWin(){
         }
     }
 }
+
+// trying to add difficulty level
+
+// function medium() {
+//     let indexesOfX = getAllIndexes(GameBoard, "x")
+//     let indexesOfO = getAllIndexes(GameBoard, "o")
+//     for(let i = 0; i < winArr.length;i++) {
+//         let formula = winArr[i]
+//         if(formula.some((x) => indexesOfX.includes(x))) {
+//             computerMedium()
+//             break
+//         }
+//     }
+// }
+
+// function computerMedium() {
+//     choice = Math.floor(Math.random() * 3)
+//     if(GameBoard[choice] != ''){
+//         computerMedium()
+//     }
+// }
