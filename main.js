@@ -8,6 +8,7 @@ let p = document.querySelector('p')
 let modal = document.querySelector('.modal')
 let btn = document.querySelector('button')
 let next;
+let round = 0;
 let choice;
 btn.addEventListener('click', restart)
 
@@ -71,26 +72,6 @@ function sign() {
     }
 }
 
-// function checkWin() {
-//     let X = getAllIndexes(GameBoard, "x")
-//     let o = getAllIndexes(GameBoard, "o")
-//     for(let i = 0; i < winArr.length; i++) {
-//         if(X.toString().includes(winArr[i].toString())){
-//             p.innerText = 'X win'
-//             boardArr.forEach((x) => {
-//                 x.removeEventListener('click', add)
-//                 btn.classList.remove('hide')
-//             })
-//         }else if((o.toString().includes(winArr[i].toString()))) {
-//             p.innerText = 'O win'
-//             boardArr.forEach((x) => {
-//                 x.removeEventListener('click', add)
-//                 btn.classList.remove('hide')
-//             })
-//         }
-//     }
-// }
-
 function checkDraw() {
     if(boardArr.every(x => x.textContent != '' && p.textContent === '')){
         p.innerText = 'Its a draw'
@@ -109,29 +90,33 @@ function choicese() {
 }
 
 function add(e) {
+    round++
     if(GameBoard[e.target.getAttribute('data-index')] !='' ){
         boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
-    }else {
-        sign()
-        if(player == computerChoice) {
-            choicese()
-            GameBoard[choice] = player
-            updateGameBoard()
-        }else {
-            GameBoard[e.target.getAttribute('data-index')] = player
-            checkWinForX()
-            checkWinForO()
-            sign()
-            choicese()
-            GameBoard[choice] = player
-            updateGameBoard()
-        }
-        checkWinForX()
-        checkWinForO()
-        updateGameBoard()
-        checkDraw()
+    }
+    sign()
+    if(player == computerChoice) {
+        choicese()
+        GameBoard[choice] = player
         updateGameBoard()
     }
+    GameBoard[e.target.getAttribute('data-index')] = player
+    if(round >= 3){
+        checkWin()
+        
+    }
+    sign()
+    choicese()
+    GameBoard[choice] = player
+    updateGameBoard()
+    if(round >= 3){
+        checkWin()
+        
+    }
+    updateGameBoard()
+    checkDraw()
+    updateGameBoard()
+    
     
 }
 
@@ -155,57 +140,42 @@ function getAllIndexes(arr, val) {
     }
     return indexes;
 }
-let test2;
-function checkWinForX() {
+
+// Check for win using Every
+
+
+function checkWin(){
     let indexesOfX = getAllIndexes(GameBoard, "x")
-    let test;
+    let indexesOfO = getAllIndexes(GameBoard, "o")
+    let checkForX;
+    let checkForO;
     for (let i = 0; i < winArr.length; i++) {
-        for(let j = 0; j < winArr[i].length; j++) {
-            test = indexesOfX.includes(winArr[i][j])
-            if(test === false) {
-                break
-            }else{
-                test2 = winArr[i]
-            }
-        }
-        if(test) {
-            test2.forEach((x) => {
+        let formula = winArr[i]
+        checkForX = formula.every((x) => indexesOfX.includes(x))
+        checkForO = formula.every((x) => indexesOfO.includes(x))
+        if(checkForX) {
+            formula.forEach((x) => {
                 boardArr[x].style.background = 'grey'
-            })
+                }
+            )
             p.innerText = `x win`
             boardArr.forEach((x) => {
                 x.removeEventListener('click', add)
                 btn.classList.remove('hide')
             })
+            break
         }
-    
-    }
-    
-}
-
-function checkWinForO() {
-    let indexesOfO = getAllIndexes(GameBoard, "o")
-    let test;
-    for (let i = 0; i < winArr.length; i++) {
-        for(let j = 0; j < winArr[i].length; j++) {
-            test = indexesOfO.includes(winArr[i][j])
-            if(test === false) {
-                break
-            }else{
-                test2 = winArr[i]
-            }
-        }
-        if(test) {
-            test2.forEach((x) => {
+        if(checkForO) {
+            formula.forEach((x) => {
                 boardArr[x].style.background = 'grey'
-            })
+                }
+            )
             p.innerText = `o win`
             boardArr.forEach((x) => {
                 x.removeEventListener('click', add)
                 btn.classList.remove('hide')
             })
+            break
         }
-    
     }
-    
 }
