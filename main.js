@@ -89,35 +89,35 @@ function choicese() {
     }
 }
 
-function add(e) {
-    round++
-    if(GameBoard[e.target.getAttribute('data-index')] !='' ){
-        boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
-    }
-    sign()
-    if(player == computerChoice) {
-        choicese()
-        GameBoard[choice] = player
-        updateGameBoard()
-    }
-    GameBoard[e.target.getAttribute('data-index')] = player
-    if(round >= 3){
-        checkWin()
-        
-    }
+function computer() {
     sign()
     choicese()
     GameBoard[choice] = player
     updateGameBoard()
     if(round >= 3){
         checkWin()
-        
+        checkDraw()
     }
+}
+
+function playerRound(e) {
+    sign()
+    GameBoard[e.target.getAttribute('data-index')] = player
     updateGameBoard()
-    checkDraw()
-    updateGameBoard()
-    
-    
+    if(round >= 3){
+        checkWin()
+        checkDraw()
+    }
+}
+
+function add(e) {
+    round++
+    if(GameBoard[e.target.getAttribute('data-index')] !='' ){
+        boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
+    }else{
+        playerRound(e)
+        computer()
+    }
 }
 
 
