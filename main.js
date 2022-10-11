@@ -209,8 +209,26 @@ function checkWin(){
 // medium level checks if player has two indexes out of three in an winArr then plays in the third arr else it calls choicese()
 function medium() {
     let indexesOfPlayer1 = getAllIndexes(GameBoard, player1.toLowerCase())
-    console.log(indexesOfPlayer1)
-    if(round > 2){
+    let check;
+    for(let i = 0; i < winArr.length; i++){
+        formula = winArr[i]
+        if(!((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))
+        || 
+        (indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))
+        || 
+        (indexesOfPlayer1.includes(formula[1]) && indexesOfPlayer1.includes(formula[2])))){
+            check = false
+            continue
+        }else{
+            check = true
+            console.log('ok')
+            break
+        }
+    }
+    if(!check){
+        choicese()
+        return
+    }else{
         for(let i = 0; i < winArr.length; i++) {
             let formula = winArr[i]
             for(let i = 0; i < formula.length; i++){
@@ -223,19 +241,24 @@ function medium() {
                         choice = formula[2]
                         console.log(`this is the computer's decision ${choice}`)
                         if(GameBoard[choice] != ''){
+                            console.log('not gonna work continue 1')
+                            choicese()
                             continue
                         }
                     }else if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))){
                         choice = formula[1]
                         console.log(`this is the computer's decision ${choice}`)
                         if(GameBoard[choice] != ''){
+                            console.log('not gonna work continue 2')
+                            choicese()
                             continue
                         }
                     }else {
                         choice = formula[0]
                         console.log(`this is the computer's decision ${choice}`)
                         if(GameBoard[choice] != ''){
-                            continue
+                            console.log('not gonna work continue 3')
+                            choicese()
                         }
                     }
                 }else {
@@ -243,7 +266,13 @@ function medium() {
                 }
             }
         }
-    }else{
-        choicese()
-    }
+    } 
 }
+
+// ((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))
+// || 
+// (indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))
+// || 
+// (indexesOfPlayer1.includes(formula[1]) && indexesOfPlayer1.includes(formula[2])))
+
+// Quick test
