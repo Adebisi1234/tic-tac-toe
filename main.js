@@ -8,7 +8,8 @@ let p = document.querySelector('p')
 let modal = document.querySelector('.modal')
 let btn = document.querySelector('button')
 let next;
-let round = 0;
+let turn = 0;
+let round = 1;
 let choice;
 btn.addEventListener('click', restart)
 
@@ -47,6 +48,7 @@ function restart() {
     GameBoard = ['','','','','','','','','']
     btn.classList.add('hide')
     p.textContent = ''
+    round = 0
     boardArr.forEach((x) => {
         x.style.background = ''
         x.textContent = ''
@@ -91,27 +93,29 @@ function choicese() {
 
 function computer() {
     sign()
-    choicese()
+    medium()
     GameBoard[choice] = player
     updateGameBoard()
-    if(round >= 3){
+    if(turn >= 3){
         checkWin()
         checkDraw()
     }
+    
+    round++
 }
 
 function playerRound(e) {
     sign()
     GameBoard[e.target.getAttribute('data-index')] = player
     updateGameBoard()
-    if(round >= 3){
+    if(turn >= 3){
         checkWin()
         checkDraw()
     }
 }
 
 function add(e) {
-    round++
+    turn++
     if(GameBoard[e.target.getAttribute('data-index')] !='' ){
         boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
     }else{
@@ -200,3 +204,46 @@ function checkWin(){
 //         computerMedium()
 //     }
 // }
+
+
+// medium level checks if player has two indexes out of three in an winArr then plays in the third arr else it calls choicese()
+function medium() {
+    let indexesOfPlayer1 = getAllIndexes(GameBoard, player1.toLowerCase())
+    console.log(indexesOfPlayer1)
+    if(round > 2){
+        for(let i = 0; i < winArr.length; i++) {
+            let formula = winArr[i]
+            for(let i = 0; i < formula.length; i++){
+                if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))
+                || 
+                 (indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))
+                || 
+                  (indexesOfPlayer1.includes(formula[1]) && indexesOfPlayer1.includes(formula[2]))){
+                    if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))){
+                        choice = formula[2]
+                        console.log(`this is the computer's decision ${choice}`)
+                        if(GameBoard[choice] != ''){
+                            continue
+                        }
+                    }else if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))){
+                        choice = formula[1]
+                        console.log(`this is the computer's decision ${choice}`)
+                        if(GameBoard[choice] != ''){
+                            continue
+                        }
+                    }else {
+                        choice = formula[0]
+                        console.log(`this is the computer's decision ${choice}`)
+                        if(GameBoard[choice] != ''){
+                            continue
+                        }
+                    }
+                }else {
+                    continue
+                }
+            }
+        }
+    }else{
+        choicese()
+    }
+}
