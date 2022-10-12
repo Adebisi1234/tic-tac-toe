@@ -93,7 +93,12 @@ function choicese() {
 
 function computer() {
     sign()
-    medium()
+    if(select.value === 'easy'){
+        choicese()
+    }else {
+        medium()
+        console.log(select.value)
+    }
     GameBoard[choice] = player
     updateGameBoard()
     if(turn >= 3){
@@ -276,3 +281,6 @@ function medium() {
 // (indexesOfPlayer1.includes(formula[1]) && indexesOfPlayer1.includes(formula[2])))
 
 // Quick test
+
+let select = document.querySelector('select')
+console.log(select.value)
