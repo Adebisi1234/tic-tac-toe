@@ -80,9 +80,9 @@ a {
     display: flex;
     justify-self: center;
     align-self: center;
-    width: max(80%, 500px);
+    width: min(80%, 500px);
     margin-top: 5%;
-    height: 70%;
+    height: 50%;
     background-color: rebeccapurple;
     font-size: xx-large;
     font-weight: 900;
@@ -104,4 +104,18 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#difficulty {
+    display: flex;
+    margin: auto;
+    background-color: aqua;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    padding: 3%;
+    align-self: center;
+    position: fixed;
+    margin-top: 40vmin;
+    display: none;
 }

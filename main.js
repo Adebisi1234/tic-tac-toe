@@ -8,9 +8,13 @@ let p = document.querySelector('p')
 let modal = document.querySelector('.modal')
 let btn = document.querySelector('button')
 let next;
+let board = document.querySelectorAll('.grid-content')
+const boardArr = Array.from(board)
 let turn = 0;
 let round = 1;
 let choice;
+let select = document.querySelector('select')
+let diff = document.querySelector('#difficulty')
 btn.addEventListener('click', restart)
 
 let choices = [x,o]
@@ -21,7 +25,15 @@ function choiceSelected(e) {
     player1 = e.target.textContent
     next = true
     modal.style.display = 'none'
+    diff.style.display = 'flex'
 }
+
+select.addEventListener('input', () => {
+    diff.style.display = 'none'
+    boardArr.forEach((x) => {
+        x.style.pointerEvents = 'all'
+    })
+})
 
 const winArr = [
     [0,1,2],
@@ -34,9 +46,7 @@ const winArr = [
     [2,5,8]
 ]
 
-let board = document.querySelectorAll('.grid-content')
 
-const boardArr = Array.from(board)
 
 
 
@@ -55,6 +65,7 @@ function restart() {
         x.style.cursor = 'default'
         x.addEventListener('click', add)
     })
+    diff.style.display = 'block'
     updateGameBoard()
 }
 
@@ -96,8 +107,7 @@ function computer() {
     if(select.value === 'easy'){
         choicese()
     }else {
-        medium()
-        console.log(select.value)
+        medium()        
     }
     GameBoard[choice] = player
     updateGameBoard()
@@ -225,8 +235,7 @@ function medium() {
             check = false
             continue
         }else{
-            check = true
-            console.log('ok')
+            check = true            
             break
         }
     }
@@ -243,26 +252,20 @@ function medium() {
                 || 
                   (indexesOfPlayer1.includes(formula[1]) && indexesOfPlayer1.includes(formula[2]))){
                     if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))){
-                        choice = formula[2]
-                        console.log(`this is the computer's decision ${choice}`)
-                        if(GameBoard[choice] != ''){
-                            console.log('not gonna work continue 1')
+                        choice = formula[2]                        
+                        if(GameBoard[choice] != ''){                            
                             choicese()
                             continue
                         }
                     }else if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))){
-                        choice = formula[1]
-                        console.log(`this is the computer's decision ${choice}`)
-                        if(GameBoard[choice] != ''){
-                            console.log('not gonna work continue 2')
+                        choice = formula[1]                        
+                        if(GameBoard[choice] != ''){                            
                             choicese()
                             continue
                         }
                     }else {
-                        choice = formula[0]
-                        console.log(`this is the computer's decision ${choice}`)
-                        if(GameBoard[choice] != ''){
-                            console.log('not gonna work continue 3')
+                        choice = formula[0]                        
+                        if(GameBoard[choice] != ''){                            
                             choicese()
                         }
                     }
@@ -282,5 +285,3 @@ function medium() {
 
 // Quick test
 
-let select = document.querySelector('select')
-console.log(select.value)
