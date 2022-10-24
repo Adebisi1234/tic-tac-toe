@@ -1,3 +1,4 @@
+// Global Variables
 let GameBoard = ['','','','','','','','','']
 let x = document.querySelector('.x')
 let o = document.querySelector('.o')
@@ -16,12 +17,12 @@ let choice;
 let select = document.querySelector('select')
 let diff = document.querySelector('#difficulty')
 btn.addEventListener('click', restart)
-
 let choices = [x,o]
-choices.forEach((e) => e.addEventListener('click', choiceSelected))
 
+// Choosing x or o
+choices.forEach((e) => e.addEventListener('click', easylected))
 
-function choiceSelected(e) {
+function easylected(e) {
     player1 = e.target.textContent
     next = true
     modal.style.display = 'none'
@@ -35,6 +36,7 @@ select.addEventListener('input', () => {
     })
 })
 
+// WINNING COMBINATIONS
 const winArr = [
     [0,1,2],
     [3,4,5],
@@ -49,11 +51,23 @@ const winArr = [
 
 
 
-
+// Adding choice to board
 boardArr.forEach((x) => {
     x.addEventListener('click', add)
 })
 
+function add(e) {
+    turn++
+    if(GameBoard[e.target.getAttribute('data-index')] !='' ){
+        boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
+    }else{
+        playerRound(e)
+        computer()
+    }
+}
+
+
+// Restart Function
 function restart() {
     GameBoard = ['','','','','','','','','']
     btn.classList.add('hide')
@@ -69,6 +83,8 @@ function restart() {
     updateGameBoard()
 }
 
+
+// Changing players
 function sign() {
     if(player1.toLowerCase() === 'x') {
         computerChoice = 'o'
@@ -85,6 +101,7 @@ function sign() {
     }
 }
 
+// Check for draw
 function checkDraw() {
     if(boardArr.every(x => x.textContent != '' && p.textContent === '')){
         p.innerText = 'Its a draw'
@@ -92,20 +109,24 @@ function checkDraw() {
     }
 }
 
-function choicese() {
+// Computer Easy mode function
+function easy() {
     choice = Math.floor(Math.random() * 9)
     let indexesOfSpace = getAllIndexes(GameBoard, '')
     if(indexesOfSpace.length <= 1){
         choice = indexesOfSpace[0]
     }else if(GameBoard[choice] != ''){
-        choicese()
+        // Recursion
+        easy()
     }
 }
 
+
+// Computer choice function
 function computer() {
     sign()
     if(select.value === 'easy'){
-        choicese()
+        easy()
     }else {
         medium()        
     }
@@ -119,6 +140,7 @@ function computer() {
     round++
 }
 
+// Game main function
 function playerRound(e) {
     sign()
     GameBoard[e.target.getAttribute('data-index')] = player
@@ -129,17 +151,9 @@ function playerRound(e) {
     }
 }
 
-function add(e) {
-    turn++
-    if(GameBoard[e.target.getAttribute('data-index')] !='' ){
-        boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
-    }else{
-        playerRound(e)
-        computer()
-    }
-}
 
 
+// Updating the DOM
 function updateGameBoard() {
     boardArr.forEach((x, i) => {
         if(x.textContent != '') {
@@ -151,7 +165,6 @@ function updateGameBoard() {
 
 
 // Getting array of indexes
-
 function getAllIndexes(arr, val) {
     var indexes = [], i = -1;
     while ((i = arr.indexOf(val, i+1)) != -1){
@@ -161,8 +174,6 @@ function getAllIndexes(arr, val) {
 }
 
 // Check for win using Every
-
-
 function checkWin(){
     let indexesOfX = getAllIndexes(GameBoard, "x")
     let indexesOfO = getAllIndexes(GameBoard, "o")
@@ -172,6 +183,7 @@ function checkWin(){
         let formula = winArr[i]
         checkForX = formula.every((x) => indexesOfX.includes(x))
         checkForO = formula.every((x) => indexesOfO.includes(x))
+
         if(checkForX) {
             formula.forEach((x) => {
                 boardArr[x].style.background = 'grey'
@@ -184,6 +196,7 @@ function checkWin(){
             })
             break
         }
+
         if(checkForO) {
             formula.forEach((x) => {
                 boardArr[x].style.background = 'grey'
@@ -199,29 +212,9 @@ function checkWin(){
     }
 }
 
-// trying to add difficulty level
 
-// function medium() {
-//     let indexesOfX = getAllIndexes(GameBoard, "x")
-//     let indexesOfO = getAllIndexes(GameBoard, "o")
-//     for(let i = 0; i < winArr.length;i++) {
-//         let formula = winArr[i]
-//         if(formula.some((x) => indexesOfX.includes(x))) {
-//             computerMedium()
-//             break
-//         }
-//     }
-// }
+// medium level checks if player has two indexes out of three in an winArr then plays in the third index else it calls easy()
 
-// function computerMedium() {
-//     choice = Math.floor(Math.random() * 3)
-//     if(GameBoard[choice] != ''){
-//         computerMedium()
-//     }
-// }
-
-
-// medium level checks if player has two indexes out of three in an winArr then plays in the third arr else it calls choicese()
 function medium() {
     let indexesOfPlayer1 = getAllIndexes(GameBoard, player1.toLowerCase())
     let check;
@@ -240,7 +233,7 @@ function medium() {
         }
     }
     if(!check){
-        choicese()
+        easy()
         return
     }else{
         for(let i = 0; i < winArr.length; i++) {
@@ -254,19 +247,19 @@ function medium() {
                     if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))){
                         choice = formula[2]                        
                         if(GameBoard[choice] != ''){                            
-                            choicese()
+                            easy()
                             continue
                         }
                     }else if((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))){
                         choice = formula[1]                        
                         if(GameBoard[choice] != ''){                            
-                            choicese()
+                            easy()
                             continue
                         }
                     }else {
                         choice = formula[0]                        
                         if(GameBoard[choice] != ''){                            
-                            choicese()
+                            easy()
                         }
                     }
                 }else {
@@ -276,12 +269,3 @@ function medium() {
         }
     } 
 }
-
-// ((indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[1]))
-// || 
-// (indexesOfPlayer1.includes(formula[0]) && indexesOfPlayer1.includes(formula[2]))
-// || 
-// (indexesOfPlayer1.includes(formula[1]) && indexesOfPlayer1.includes(formula[2])))
-
-// Quick test
-
