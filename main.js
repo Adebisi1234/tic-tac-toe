@@ -20,9 +20,9 @@ btn.addEventListener('click', restart)
 let choices = [x,o]
 
 // Choosing x or o
-choices.forEach((e) => e.addEventListener('click', easylected))
+choices.forEach((e) => e.addEventListener('click', selected))
 
-function easylected(e) {
+function selected(e) {
     player1 = e.target.textContent
     next = true
     modal.style.display = 'none'
@@ -30,10 +30,15 @@ function easylected(e) {
 }
 
 select.addEventListener('input', () => {
-    diff.style.display = 'none'
-    boardArr.forEach((x) => {
-        x.style.pointerEvents = 'all'
-    })
+    if(!(select.value === 'default')){
+        diff.style.display = 'none'
+        boardArr.forEach((x) => {
+            x.style.pointerEvents = 'all'
+        })
+    }else {
+        return;
+    }
+    
 })
 
 // WINNING COMBINATIONS
