@@ -84,6 +84,7 @@ function restart() {
         x.style.cursor = 'default'
         x.addEventListener('click', add)
     })
+    modal.style.display = 'flex'
     diff.style.display = 'block'
     updateGameBoard()
 }
