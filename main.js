@@ -1,12 +1,12 @@
 // Global Variables
-const GameBoard = ['','','','','','','','','']
+let GameBoard = ['','','','','','','','','']
 const x = document.querySelector('.x')
 const o = document.querySelector('.o')
 let player1;
 let computerChoice;
 let player;
 const defaultOption = document.querySelector('#default')
-const p = document.querySelector('p')
+let p = document.querySelector('p')
 const modal = document.querySelector('.modal')
 const btn = document.querySelector('button')
 let next;
