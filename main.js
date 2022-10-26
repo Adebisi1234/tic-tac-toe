@@ -1,25 +1,25 @@
 // Global Variables
-let GameBoard = ['','','','','','','','','']
-let x = document.querySelector('.x')
-let o = document.querySelector('.o')
+const GameBoard = ['','','','','','','','','']
+const x = document.querySelector('.x')
+const o = document.querySelector('.o')
 let player1;
 let computerChoice;
 let player;
 const defaultOption = document.querySelector('#default')
-let p = document.querySelector('p')
-let modal = document.querySelector('.modal')
-let btn = document.querySelector('button')
+const p = document.querySelector('p')
+const modal = document.querySelector('.modal')
+const btn = document.querySelector('button')
 let next;
-let board = document.querySelectorAll('.grid-content')
+const board = document.querySelectorAll('.grid-content')
 const boardArr = Array.from(board)
 let turn = 0;
 const fixed = document.querySelector('.fixed')
 let round = 1;
 let choice;
-let select = document.querySelector('select')
-let diff = document.querySelector('#difficulty')
+const select = document.querySelector('select')
+const diff = document.querySelector('#difficulty')
 btn.addEventListener('click', restart)
-let choices = [x,o]
+const choices = [x,o]
 
 // Choosing x or o
 choices.forEach((e) => e.addEventListener('click', selected))
@@ -71,7 +71,10 @@ function add(e) {
         boardArr[e.target.getAttribute('data-index')].style.cursor = 'not-allowed'
     }else{
         playerRound(e)
-        computer()
+        if(p.textContent === ''){
+            computer()    
+        }
+        
     }
 }
 
