@@ -78,10 +78,7 @@ a {
 .modal {
     position: fixed;
     display: flex;
-    justify-self: center;
-    align-self: center;
     width: min(80%, 500px);
-    margin-top: 15%;
     height: 50%;
     font-size: xx-large;
     font-weight: 900;
@@ -109,6 +106,8 @@ a {
     display: flex;
     width: 100vw;
     height: 100vh;
+    flex-direction: column;
+    color: blue;
     background-color: aqua;
     justify-content: center;
     align-items: center;
@@ -123,4 +122,14 @@ svg {
 select {
     width: 20vw;
     height: auto;
+}
+
+.fixed {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
 }

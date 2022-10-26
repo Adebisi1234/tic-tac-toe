@@ -5,6 +5,7 @@ let o = document.querySelector('.o')
 let player1;
 let computerChoice;
 let player;
+const defaultOption = document.querySelector('#default')
 let p = document.querySelector('p')
 let modal = document.querySelector('.modal')
 let btn = document.querySelector('button')
@@ -12,6 +13,7 @@ let next;
 let board = document.querySelectorAll('.grid-content')
 const boardArr = Array.from(board)
 let turn = 0;
+const fixed = document.querySelector('.fixed')
 let round = 1;
 let choice;
 let select = document.querySelector('select')
@@ -24,8 +26,10 @@ choices.forEach((e) => e.addEventListener('click', selected))
 
 function selected(e) {
     player1 = e.target.textContent
+    fixed.style.display = 'none'
     next = true
     modal.style.display = 'none'
+
     diff.style.display = 'flex'
 }
 
@@ -84,8 +88,12 @@ function restart() {
         x.style.cursor = 'default'
         x.addEventListener('click', add)
     })
+    fixed.style.display = 'flex'
     modal.style.display = 'flex'
-    diff.style.display = 'block'
+    diff.style.display = 'none'
+    select.value = 'default'
+    defaultOption.setAttribute('selected', 'selected')
+    console.log(defaultOption.attributes)
     updateGameBoard()
 }
 
